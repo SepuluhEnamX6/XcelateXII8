@@ -4,15 +4,15 @@
 @tailwind utilities;
 
 :root {
-	--primary-color: #575c84;
-	--secondary-color: #686e9d;
-	--tertiary-color: #e06bd5;
-	--quaternary-color: #18fff3;
-	--quinary-color: #ff775c;
-	--senary-color: #ff4359;
-	--septenary-color: #76ffb0;
-	--bg: #4b39c6;
-	--bg1: #e06bd5;
+	--primary-color: #4b6cb7;
+	--secondary-color: #182848;
+	--tertiary-color: #22b8cf; /* ganti pink */
+	--quaternary-color: #4dabf7;
+	--quinary-color: #74c0fc;
+	--senary-color: #3bc9db;
+	--septenary-color: #63e6be;
+	--bg: #182848;
+	--bg1: #4b6cb7;
 }
 
 html {

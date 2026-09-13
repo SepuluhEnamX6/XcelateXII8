@@ -19,9 +19,10 @@ jobs:
 
           URL="${SUPABASE_URL}/rest/v1/photos?select=id&limit=1"
 
-          HTTP_CODE=$(curl -sS -o /tmp/response.txt -w "%{http_code}" \
+          HTTP_CODE=$(curl -sS \
+            -o /tmp/response.txt \
+            -w "%{http_code}" \
             -H "apikey: ${SUPABASE_KEY}" \
-            -H "Authorization: Bearer ${SUPABASE_KEY}" \
             "$URL")
 
           echo "Supabase HTTP status: $HTTP_CODE"

@@ -1,21 +1,35 @@
-```yaml
 name: Supabase Keep Alive
 
 on:
   schedule:
-    # Jalan setiap hari pukul 09:00 UTC (16:00 WIB)
-    - cron: "0 9 * * *"
+    - cron: "17 */6 * * *"
   workflow_dispatch:
 
 jobs:
-  keep-alive:
+  ping:
     runs-on: ubuntu-latest
 
     steps:
       - name: Ping Supabase
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
         run: |
-          curl -sS \
-            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
-            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}" \
-            "${{ secrets.SUPABASE_URL }}/rest/v1/students?select=id&limit=1"
-```
+          set -e
+
+          URL="${SUPABASE_URL}/rest/v1/photos?select=id&limit=1"
+
+          HTTP_CODE=$(curl -sS -o /tmp/response.txt -w "%{http_code}" \
+            -H "apikey: ${SUPABASE_KEY}" \
+            -H "Authorization: Bearer ${SUPABASE_KEY}" \
+            "$URL")
+
+          echo "Supabase HTTP status: $HTTP_CODE"
+          cat /tmp/response.txt
+
+          if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
+            echo "Supabase ping failed."
+            exit 1
+          fi
+
+          echo "Supabase ping successful."
